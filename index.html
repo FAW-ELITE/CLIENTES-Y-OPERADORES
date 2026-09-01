@@ -5,22 +5,101 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Selección</title>
   <style>
-    body { font-family: 'Segoe UI', Arial, sans-serif; text-align: center; padding: 20px; background-color: #f4f6f9; margin: 0; }
-    h1 { color: #2c3e50; font-size: 24px; margin-top: 20px; }
-    p { color: #7f8c8d; font-size: 14px; }
-    .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; max-width: 350px; margin: 30px auto; }
-    .card { background: white; border-radius: 15px; padding: 15px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); cursor: pointer; transition: transform 0.2s; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+    body { 
+      font-family: 'Segoe UI', Arial, sans-serif; 
+      text-align: center; 
+      padding: 20px; 
+      margin: 0; 
+      /* FONDO DE PÁGINA */
+      background-image: url('https://grupostep.com.mx/wp-content/uploads/2026/08/BG-FAWELITE-2026.webp');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      min-height: 100vh;
+      color: #ffffff;
+    }
+    
+    /* LOGO DE LA EMPRESA */
+    .company-logo {
+      width: 160px;
+      height: auto;
+      margin-top: 15px;
+      margin-bottom: 15px;
+      object-fit: contain;
+    }
+
+    /* ESTILOS DE TEXTOS EN BLANCO */
+    .greeting {
+      font-size: 32px;
+      font-weight: 900;
+      text-transform: uppercase;
+      color: #ffffff;
+      margin-top: 10px;
+      margin-bottom: 5px;
+      letter-spacing: 1px;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+    }
+
+    .question {
+      font-size: 22px;
+      font-weight: 500;
+      color: #ffffff;
+      margin-top: 0;
+      margin-bottom: 15px;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+    }
+
+    .subtitulos {
+      font-size: 15px;
+      color: #ffffff;
+      opacity: 0.9;
+      margin-top: 0;
+      margin-bottom: 25px;
+      text-shadow: 0 1px 3px rgba(0,0,0,0.5);
+    }
+
+    /* CUADRÍCULA DE OPCIONES */
+    .grid { 
+      display: grid; 
+      grid-template-columns: 1fr 1fr; 
+      gap: 15px; 
+      max-width: 350px; 
+      margin: 0 auto 30px auto; 
+    }
+    
+    .card { 
+      background: rgba(255, 255, 255, 0.95); 
+      border-radius: 15px; 
+      padding: 15px; 
+      box-shadow: 0 4px 12px rgba(0,0,0,0.25); 
+      cursor: pointer; 
+      transition: transform 0.2s; 
+      display: flex; 
+      flex-direction: column; 
+      align-items: center; 
+      justify-content: center; 
+    }
+    
     .card:active { transform: scale(0.95); }
     .card img { width: 80px; height: 80px; object-fit: contain; margin-bottom: 10px; }
     .card span { font-weight: bold; color: #333; font-size: 14px; }
-    #loader { display: none; margin-top: 40px; font-size: 18px; color: #2980b9; font-weight: bold; }
-    #confirmacion { display: none; margin-top: 40px; padding: 20px; background: #2ecc71; color: white; border-radius: 12px; font-size: 18px; font-weight: bold; }
+    
+    #loader { display: none; margin-top: 40px; font-size: 20px; color: #ffffff; font-weight: bold; text-shadow: 0 2px 4px rgba(0,0,0,0.6); }
+    #confirmacion { display: none; margin-top: 40px; padding: 20px; background: rgba(46, 204, 113, 0.9); color: white; border-radius: 12px; font-size: 18px; font-weight: bold; box-shadow: 0 4px 10px rgba(0,0,0,0.3); }
   </style>
 </head>
 <body>
 
-  <h1 id="saludo">Cargando...</h1>
-  <p id="subtitulo">Selecciona una opción para registrar tu respuesta:</p>
+  <!-- LOGO DE LA EMPRESA -->
+  <img src="https://grupostep.com.mx/wp-content/uploads/2025/09/Logos-Narobia-blaco.png" alt="Logo Narobia" class="company-logo">
+
+  <!-- TEXTOS ACOMODADOS -->
+  <div id="encabezado">
+    <div class="greeting" id="saludoUsuario">HOLA USUARIO</div>
+    <div class="question">¿a dónde iremos hoy?</div>
+    <div class="subtitulos" id="subtitulo">Selecciona una opción para registrar tu respuesta:</div>
+  </div>
 
   <div class="grid" id="opciones">
     <div class="card" onclick="seleccionar('IHOPE')">
@@ -58,12 +137,14 @@
   <div id="confirmacion">¡Gracias! Tu selección ha sido registrada con éxito.</div>
 
   <script>
+    // REEMPLAZA ESTA URL POR LA TUYA DE GOOGLE APPS SCRIPT (/exec)
     const API_URL = "https://script.google.com/macros/s/AKfycbwZAsEGynC456OUaT0FJcjrmKJCYUL7N5Ohsf7-0_qB5H-Pzbdb6GO_7IHx3nqlwrH4/exec";
     
     const urlParams = new URLSearchParams(window.location.search);
     const usuario = urlParams.get('usuario') || 'Usuario';
     
-    document.getElementById('saludo').innerText = 'Hola ' + usuario + ', ¿a dónde iremos hoy?';
+    // Ponemos en mayúsculas el texto "HOLA" y el nombre del usuario
+    document.getElementById('saludoUsuario').innerText = 'HOLA ' + usuario.toUpperCase();
 
     // Registro automático al abrir
     window.onload = function() {
