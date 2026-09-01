@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Selección</title>
+  <style>
+    body { font-family: 'Segoe UI', Arial, sans-serif; text-align: center; padding: 20px; background-color: #f4f6f9; margin: 0; }
+    h1 { color: #2c3e50; font-size: 24px; margin-top: 20px; }
+    p { color: #7f8c8d; font-size: 14px; }
+    .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; max-width: 350px; margin: 30px auto; }
+    .card { background: white; border-radius: 15px; padding: 15px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); cursor: pointer; transition: transform 0.2s; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+    .card:active { transform: scale(0.95); }
+    .card img { width: 80px; height: 80px; object-fit: contain; margin-bottom: 10px; }
+    .card span { font-weight: bold; color: #333; font-size: 14px; }
+    #loader { display: none; margin-top: 40px; font-size: 18px; color: #2980b9; font-weight: bold; }
+    #confirmacion { display: none; margin-top: 40px; padding: 20px; background: #2ecc71; color: white; border-radius: 12px; font-size: 18px; font-weight: bold; }
+  </style>
+</head>
+<body>
+
+  <h1 id="saludo">Cargando...</h1>
+  <p id="subtitulo">Selecciona una opción para registrar tu respuesta:</p>
+
+  <div class="grid" id="opciones">
+    <div class="card" onclick="seleccionar('IHOPE')">
+      <img src="https://ihopmexico.com/wp-content/uploads/2023/01/ihop-logo-placeholder.png" alt="IHOPE">
+      <span>IHOPE</span>
+    </div>
+
+    <div class="card" onclick="seleccionar('CHILTEPINOS')">
+      <img src="https://chiltepinos.mx/assets/images/logo-chiltepinos.png" alt="CHILTEPINOS">
+      <span>CHILTEPINOS</span>
+    </div>
+
+    <div class="card" onclick="seleccionar('SALUD DIGNA')">
+      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTczDHxUhH7AcUEszTzWjzNn2z40pMLNuAWluyzlqC-&s" alt="SALUD DIGNA">
+      <span>SALUD DIGNA</span>
+    </div>
+
+    <div class="card" onclick="seleccionar('CHOPPO')">
+      <img src="https://mercadotecniaderelacionesyservicios.wordpress.com/wp-content/uploads/2016/09/chopo.png" alt="CHOPPO">
+      <span>CHOPPO</span>
+    </div>
+
+    <div class="card" onclick="seleccionar('N ROUTE')">
+      <img src="https://images.rappi.com.mx/marketplace/n_route_food_mt_nc-1632897954026.jpg" alt="N ROUTE">
+      <span>N ROUTE</span>
+    </div>
+
+    <div class="card" onclick="seleccionar('SKI PLACE')">
+      <img src="https://play-lh.googleusercontent.com/1zQzIufggHmxRwW6XK7IVEsj5DVUEYhK6dqBRQCQqfnWH0b4n2CPD41BMoea70W13V94UYG0sB8VjCWN6QIfvQ" alt="SKI PLACE">
+      <span>SKI PLACE</span>
+    </div>
+  </div>
+
+  <div id="loader">Registrando tu elección...</div>
+  <div id="confirmacion">¡Gracias! Tu selección ha sido registrada con éxito.</div>
+
+  <script>
+    const API_URL = "https://script.google.com/macros/s/AKfycbwZAsEGynC456OUaT0FJcjrmKJCYUL7N5Ohsf7-0_qB5H-Pzbdb6GO_7IHx3nqlwrH4/exec";
+    
+    const urlParams = new URLSearchParams(window.location.search);
+    const usuario = urlParams.get('usuario') || 'Usuario';
+    
+    document.getElementById('saludo').innerText = 'Hola ' + usuario + ', ¿a dónde iremos hoy?';
+
+    // Registro automático al abrir
+    window.onload = function() {
+      fetch(API_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ usuario: usuario, accion: 'Apertura de Link' })
+      });
+    };
+
+    // Registro al tocar un logo
+    function seleccionar(opcion) {
+      document.getElementById('opciones').style.display = 'none';
+      document.getElementById('subtitulo').style.display = 'none';
+      document.getElementById('loader').style.display = 'block';
+
+      fetch(API_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ usuario: usuario, accion: 'Seleccion', opcion: opcion })
+      }).then(() => {
+        document.getElementById('loader').style.display = 'none';
+        document.getElementById('confirmacion').style.display = 'block';
+      });
+    }
+  </script>
+
+</body>
+</html>
