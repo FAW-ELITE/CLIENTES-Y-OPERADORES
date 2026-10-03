@@ -3,150 +3,350 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Selección</title>
+  <title>Selección de Convenios - FAW ELITE</title>
   <style>
+    /* 8. FONDO REPETITIVO EN TODA LA PÁGINA */
     body { 
       font-family: 'Segoe UI', Arial, sans-serif; 
       text-align: center; 
-      padding: 20px; 
+      padding: 20px 15px; 
       margin: 0; 
-      /* FONDO DE PÁGINA */
       background-image: url('https://grupostep.com.mx/wp-content/uploads/2026/08/BG-FAWELITE-2026.webp');
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
-      background-attachment: fixed;
+      background-repeat: repeat; /* Se repite horizontal y verticalmente */
+      background-position: top left;
       min-height: 100vh;
-      color: #ffffff;
+      box-sizing: border-box;
     }
-    
-    /* LOGO DE LA EMPRESA */
+
+    /* LOGOTIPO DE LA EMPRESA (CABECERA PRINCIPAL) */
     .company-logo {
-      width: 160px;
+      width: 170px;
       height: auto;
-      margin-top: 15px;
-      margin-bottom: 15px;
+      margin-top: 10px;
+      margin-bottom: 10px;
       object-fit: contain;
     }
 
-    /* ESTILOS DE TEXTOS EN BLANCO */
-    .greeting {
-      font-size: 32px;
-      font-weight: 900;
-      text-transform: uppercase;
-      color: #ffffff;
-      margin-top: 10px;
+    /* TEXTOS EN LETRA BLANCA CON SOMBRA */
+    h1 { 
+      color: #ffffff; 
+      font-size: 24px; 
+      margin-top: 5px; 
       margin-bottom: 5px;
-      letter-spacing: 1px;
-      text-shadow: 0 2px 4px rgba(0,0,0,0.5);
-    }
-
-    .question {
-      font-size: 22px;
-      font-weight: 500;
-      color: #ffffff;
-      margin-top: 0;
-      margin-bottom: 15px;
-      text-shadow: 0 2px 4px rgba(0,0,0,0.5);
-    }
-
-    .subtitulos {
-      font-size: 15px;
-      color: #ffffff;
-      opacity: 0.9;
-      margin-top: 0;
-      margin-bottom: 25px;
-      text-shadow: 0 1px 3px rgba(0,0,0,0.5);
-    }
-
-    /* CUADRÍCULA DE OPCIONES */
-    .grid { 
-      display: grid; 
-      grid-template-columns: 1fr 1fr; 
-      gap: 15px; 
-      max-width: 350px; 
-      margin: 0 auto 30px auto; 
+      text-shadow: 0 2px 4px rgba(0,0,0,0.7); 
     }
     
+    p.subtitulo { 
+      color: #ffffff; 
+      font-size: 15px; 
+      margin-top: 0;
+      margin-bottom: 25px;
+      text-shadow: 0 1px 3px rgba(0,0,0,0.7); 
+    }
+
+    /* 2. ACOMODO DE LAS OPCIONES EN 2 COLUMNAS + CENTRADO DEL ÚLTIMO ELEMENTO IMPAR */
+    .grid { 
+      display: grid; 
+      grid-template-columns: repeat(2, 1fr); 
+      gap: 20px 15px; 
+      max-width: 380px; 
+      margin: 0 auto; 
+    }
+
+    /* Si hay un número impar de elementos (como 5, 7, etc.), el último se centra */
+    .grid .card-container:last-child:nth-child(odd) {
+      grid-column: 1 / -1;
+      justify-self: center;
+      width: calc(50% - 7.5px); /* Mismo ancho que las tarjetas de 2 columnas */
+    }
+
+    @media (max-width: 340px) {
+      .grid .card-container:last-child:nth-child(odd) {
+        width: 100%;
+      }
+    }
+
+    /* CONTENEDOR DE CADA TARJETA */
+    .card-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+    }
+
+    /* 4. ETIQUETA / PESTAÑA DE UBICACIÓN */
+    .badge-location {
+      background-color: #2c3e50;
+      color: #ffffff;
+      font-size: 10px;
+      font-weight: bold;
+      padding: 4px 8px;
+      border-radius: 6px 6px 0 0;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      box-shadow: 0 -2px 5px rgba(0,0,0,0.2);
+      width: 85%;
+      box-sizing: border-box;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      z-index: 1;
+    }
+
+    /* TARJETA CON LOGO */
     .card { 
-      background: rgba(255, 255, 255, 0.95); 
-      border-radius: 15px; 
-      padding: 15px; 
+      background: white; 
+      border-radius: 0 0 15px 15px; 
+      padding: 15px 10px; 
       box-shadow: 0 4px 12px rgba(0,0,0,0.25); 
       cursor: pointer; 
-      transition: transform 0.2s; 
+      transition: transform 0.2s, box-shadow 0.2s; 
       display: flex; 
       flex-direction: column; 
       align-items: center; 
       justify-content: center; 
+      width: 100%;
+      box-sizing: border-box;
     }
-    
-    .card:active { transform: scale(0.95); }
-    .card img { width: 80px; height: 80px; object-fit: contain; margin-bottom: 10px; }
-    .card span { font-weight: bold; color: #333; font-size: 14px; }
-    
-    #loader { display: none; margin-top: 40px; font-size: 20px; color: #ffffff; font-weight: bold; text-shadow: 0 2px 4px rgba(0,0,0,0.6); }
-    #confirmacion { display: none; margin-top: 40px; padding: 20px; background: rgba(46, 204, 113, 0.9); color: white; border-radius: 12px; font-size: 18px; font-weight: bold; box-shadow: 0 4px 10px rgba(0,0,0,0.3); }
+
+    .card:active { 
+      transform: scale(0.95); 
+    }
+
+    .card img { 
+      width: 100%; 
+      max-width: 100px;
+      height: 90px; 
+      object-fit: contain; 
+      margin-bottom: 8px; 
+    }
+
+    .card span { 
+      font-weight: bold; 
+      color: #333; 
+      font-size: 13px; 
+    }
+
+    /* TARJETA MODAL / VISTAS DE DETALLE Y CONFIRMACIÓN */
+    .modal-view {
+      display: none;
+      background: #ffffff;
+      border-radius: 18px;
+      padding: 20px;
+      max-width: 420px;
+      margin: 10px auto;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+      text-align: left;
+      box-sizing: border-box;
+    }
+
+    /* 7. LOGO PERSISTENTE EN LA PARTE SUPERIOR DE LAS VISTAS */
+    .selected-option-header {
+      text-align: center;
+      border-bottom: 2px solid #f0f0f0;
+      padding-bottom: 15px;
+      margin-bottom: 15px;
+    }
+
+    .selected-option-header img {
+      width: 120px;
+      height: 90px;
+      object-fit: contain;
+    }
+
+    .selected-option-header h2 {
+      margin: 5px 0 0 0;
+      color: #2c3e50;
+      font-size: 20px;
+    }
+
+    /* CONTENIDO DEL CONVENIO (PUNTO 5) */
+    .modal-content h3 {
+      color: #e74c3c;
+      font-size: 16px;
+      margin: 12px 0 6px 0;
+      border-bottom: 1px solid #eee;
+      padding-bottom: 4px;
+    }
+
+    .modal-content ul {
+      margin: 6px 0 12px 0;
+      padding-left: 20px;
+      color: #444;
+      font-size: 14px;
+      line-height: 1.4;
+    }
+
+    .modal-content p, .modal-content li {
+      color: #444;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    /* BOTONES */
+    .btn-action {
+      display: block;
+      width: 100%;
+      background: #27ae60;
+      color: white;
+      border: none;
+      padding: 14px;
+      border-radius: 10px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: 20px;
+      box-shadow: 0 4px 10px rgba(39, 174, 96, 0.3);
+      transition: background 0.2s;
+      text-align: center;
+    }
+
+    .btn-action:active {
+      background: #219150;
+    }
+
+    .btn-back {
+      display: block;
+      width: 100%;
+      background: #7f8c8d;
+      color: white;
+      border: none;
+      padding: 10px;
+      border-radius: 8px;
+      font-size: 14px;
+      cursor: pointer;
+      margin-top: 10px;
+      text-align: center;
+    }
+
+    /* CARGADOR */
+    #loader { 
+      display: none; 
+      margin-top: 40px; 
+      font-size: 18px; 
+      color: #ffffff; 
+      font-weight: bold; 
+      text-shadow: 0 2px 4px rgba(0,0,0,0.8); 
+    }
+
+    /* VISTA DE CONFIRMACIÓN CON IMAGEN (PUNTO 6) */
+    .final-image {
+      width: 100%;
+      max-width: 100%;
+      height: auto;
+      border-radius: 10px;
+      margin-top: 15px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    }
+
+    .alert-success {
+      background: #d4edda;
+      color: #155724;
+      padding: 12px;
+      border-radius: 8px;
+      text-align: center;
+      font-weight: bold;
+      margin-bottom: 15px;
+      border: 1px solid #c3e6cb;
+    }
   </style>
 </head>
 <body>
 
-  <!-- LOGO DE LA EMPRESA -->
-  <img src="https://grupostep.com.mx/wp-content/uploads/2025/09/Logos-Narobia-blaco.png" alt="Logo Narobia" class="company-logo">
+  <!-- LOGO DE FAW ELITE / GRUPO STEP -->
+  <img src="https://grupostep.com.mx/wp-content/uploads/2025/09/Logos-Narobia-blaco.png" alt="FAW Elite" class="company-logo">
 
-  <!-- TEXTOS ACOMODADOS -->
-  <div id="encabezado">
-    <div class="greeting" id="saludoUsuario">HOLA USUARIO</div>
-    <div class="question">¿a dónde iremos hoy?</div>
-    <div class="subtitulos" id="subtitulo">Selecciona una opción para registrar tu respuesta:</div>
+  <!-- VISTA 1: CATÁLOGO DE OPCIONES -->
+  <div id="vista-seleccion">
+    <h1 id="saludo">Cargando...</h1>
+    <p class="subtitulo" id="subtitulo">Selecciona una opción para consultar su convenio:</p>
+
+    <div class="grid" id="opciones">
+      <!-- IHOP -->
+      <div class="card-container">
+        <div class="badge-location">Zona Noroeste de México</div>
+        <div class="card" onclick="verDetalle('IHOP')">
+          <img src="https://grupostep.com.mx/wp-content/uploads/2026/09/logo-FAWELITE-IHOP-300x300.png" alt="IHOP">
+          <span>IHOP</span>
+        </div>
+      </div>
+
+      <!-- CHILTEPINOS -->
+      <div class="card-container">
+        <div class="badge-location">Hermosillo, Sonora</div>
+        <div class="card" onclick="verDetalle('CHILTEPINOS')">
+          <img src="https://grupostep.com.mx/wp-content/uploads/2026/09/logo-FAWELITE-CHILTEPINOS-300x300.png" alt="CHILTEPINOS">
+          <span>CHILTEPINOS</span>
+        </div>
+      </div>
+
+      <!-- SALUD DIGNA -->
+      <div class="card-container">
+        <div class="badge-location">Nacional</div>
+        <div class="card" onclick="verDetalle('SALUD DIGNA')">
+          <img src="https://grupostep.com.mx/wp-content/uploads/2026/09/logo-FAWELITE-SALUD-DIGNA-300x300.png" alt="SALUD DIGNA">
+          <span>SALUD DIGNA</span>
+        </div>
+      </div>
+
+      <!-- N ROUTE -->
+      <div class="card-container">
+        <div class="badge-location">Hermosillo</div>
+        <div class="card" onclick="verDetalle('N ROUTE')">
+          <img src="https://grupostep.com.mx/wp-content/uploads/2026/09/logo-FAWELITE-NROUTE-300x300.png" alt="N ROUTE">
+          <span>N ROUTE</span>
+        </div>
+      </div>
+    </div>
   </div>
 
-  <div class="grid" id="opciones">
-    <div class="card" onclick="seleccionar('IHOPE')">
-      <img src="https://ihopmexico.com/wp-content/uploads/2023/01/ihop-logo-placeholder.png" alt="IHOPE">
-      <span>IHOPE</span>
+  <!-- VISTA 2: DETALLE DEL CONVENIO Y CONFIRMACIÓN INTERMEDIA (PUNTOS 3, 5 Y 7) -->
+  <div id="vista-detalle" class="modal-view">
+    <div class="selected-option-header">
+      <img id="detail-logo" src="" alt="Logo Convenio">
+      <h2 id="detail-title"></h2>
     </div>
 
-    <div class="card" onclick="seleccionar('CHILTEPINOS')">
-      <img src="https://chiltepinos.mx/assets/images/logo-chiltepinos.png" alt="CHILTEPINOS">
-      <span>CHILTEPINOS</span>
+    <div class="modal-content" id="detail-body">
+      <!-- Se llena dinámicamente según la opción elegida -->
     </div>
 
-    <div class="card" onclick="seleccionar('SALUD DIGNA')">
-      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTczDHxUhH7AcUEszTzWjzNn2z40pMLNuAWluyzlqC-&s" alt="SALUD DIGNA">
-      <span>SALUD DIGNA</span>
-    </div>
-
-    <div class="card" onclick="seleccionar('CHOPPO')">
-      <img src="https://mercadotecniaderelacionesyservicios.wordpress.com/wp-content/uploads/2016/09/chopo.png" alt="CHOPPO">
-      <span>CHOPPO</span>
-    </div>
-
-    <div class="card" onclick="seleccionar('N ROUTE')">
-      <img src="https://images.rappi.com.mx/marketplace/n_route_food_mt_nc-1632897954026.jpg" alt="N ROUTE">
-      <span>N ROUTE</span>
-    </div>
-
-    <div class="card" onclick="seleccionar('SKI PLACE')">
-      <img src="https://play-lh.googleusercontent.com/1zQzIufggHmxRwW6XK7IVEsj5DVUEYhK6dqBRQCQqfnWH0b4n2CPD41BMoea70W13V94UYG0sB8VjCWN6QIfvQ" alt="SKI PLACE">
-      <span>SKI PLACE</span>
-    </div>
+    <button class="btn-action" onclick="confirmarRegistro()">Acepto la promoción / Registrar selección</button>
+    <button class="btn-back" onclick="volverASeleccion()">Regresar a las opciones</button>
   </div>
 
+  <!-- VISTA CARGANDO -->
   <div id="loader">Registrando tu elección...</div>
-  <div id="confirmacion">¡Gracias! Tu selección ha sido registrada con éxito.</div>
+
+  <!-- VISTA 3: MENSAJE/IMAGEN POSTERIOR AL REGISTRO (PUNTO 6) -->
+  <div id="vista-final" class="modal-view">
+    <div class="selected-option-header">
+      <img id="final-logo" src="" alt="Logo Convenio">
+      <h2 id="final-title"></h2>
+    </div>
+
+    <div class="alert-success">
+      ¡Tu selección ha sido registrada con éxito!
+    </div>
+
+    <div id="final-content" style="text-align: center;">
+      <!-- Se cargará la imagen o mensaje final del convenio -->
+    </div>
+  </div>
 
   <script>
-    // REEMPLAZA ESTA URL POR LA TUYA DE GOOGLE APPS SCRIPT (/exec)
-    const API_URL = "https://script.google.com/macros/s/AKfycbwZAsEGynC456OUaT0FJcjrmKJCYUL7N5Ohsf7-0_qB5H-Pzbdb6GO_7IHx3nqlwrH4/exec";
+    // URL DE TU BACKEND EN GOOGLE APPS SCRIPT
+    const API_URL = "https://script.google.com/macros/s/AKfycbw9h-0d2SKhwNEP6XcHoHoNxATXq8QQXeAi9PCxc3w/exec";
     
+    // OBTENER PARÁMETRO DE USUARIO DESDE LA URL
     const urlParams = new URLSearchParams(window.location.search);
     const usuario = urlParams.get('usuario') || 'Usuario';
     
-    // Ponemos en mayúsculas el texto "HOLA" y el nombre del usuario
-    document.getElementById('saludoUsuario').innerText = 'HOLA ' + usuario.toUpperCase();
+    let opcionSeleccionada = "";
 
-    // Registro automático al abrir
+    document.getElementById('saludo').innerText = 'Hola ' + usuario + ', ¿a dónde iremos hoy?';
+
+    // REGISTRO AUTOMÁTICO DE APERTURA AL CARGAR LA PÁGINA
     window.onload = function() {
       fetch(API_URL, {
         method: 'POST',
@@ -156,21 +356,135 @@
       });
     };
 
-    // Registro al tocar un logo
-    function seleccionar(opcion) {
-      document.getElementById('opciones').style.display = 'none';
-      document.getElementById('subtitulo').style.display = 'none';
+    // BASE DE DATOS DE INFORMACIÓN DE LOS CONVENIOS (PUNTO 5 Y PUNTO 6)
+    const convenios = {
+      'IHOP': {
+        logo: 'https://grupostep.com.mx/wp-content/uploads/2026/09/logo-FAWELITE-IHOP-300x300.png',
+        promocion: '<p><strong>15% de descuento</strong> en su consumo.</p>',
+        sucursales: '<p>Aplica en sucursales de la <strong>Zona Noroeste de México</strong>.</p>',
+        imagenFinal: 'https://grupostep.com.mx/wp-content/uploads/2026/10/FE-03.jpeg'
+      },
+      'CHILTEPINOS': {
+        logo: 'https://grupostep.com.mx/wp-content/uploads/2026/09/logo-FAWELITE-CHILTEPINOS-300x300.png',
+        promocion: `
+          <ul>
+            <li>Descuento del <strong>15%</strong> sobre el consumo realizado en las sucursales participantes.</li>
+            <li>El beneficio podrá extenderse a familiares directos, siempre y cuando indiquen que son parte de <strong>FAW Trucks Elam Step México</strong>.</li>
+            <li>El beneficio será válido durante toda la semana, incluyendo días festivos.</li>
+            <li>También podrán acceder a un menú especial ejecutivo, disponible de lunes a viernes. El usuario podrá elegir entre utilizar el descuento de la alianza o el menú especial.</li>
+            <li>Estos beneficios también aplican para pedidos para llevar, siempre y cuando se realice el pedido llamando directamente al restaurante y se recoja en la sucursal correspondiente.</li>
+          </ul>`,
+        sucursales: `
+          <ul>
+            <li><strong>Lomas:</strong> De los Ganaderos 1249, Las Lomas, 83270 Hermosillo, Son.</li>
+            <li><strong>Centro:</strong> C. Benito Juárez 47, Centro, 83000 Hermosillo, Son.</li>
+            <li><strong>Santa Fe:</strong> Plaza Santa Fe, Periférico Poniente No. 153, Locales 8 y 9, Santa Fe, 83249 Hermosillo, Son.</li>
+            <li><strong>Quiroga:</strong> Blvd. Antonio Quiroga 118, Real de Quiroga, Sección Madrigal, 83224 Hermosillo, Son.</li>
+          </ul>`,
+        imagenFinal: null,
+        mensajeFinal: '<p style="color: #555; margin-top:15px;">Muestra esta pantalla en caja o menciona el convenio <strong>FAW Trucks Elam Step México</strong> al realizar tu pedido.</p>'
+      },
+      'SALUD DIGNA': {
+        logo: 'https://grupostep.com.mx/wp-content/uploads/2026/09/logo-FAWELITE-SALUD-DIGNA-300x300.png',
+        promocion: `
+          <p><strong>10% de descuento</strong> en estudios clínicos.</p>
+          <p><strong>Servicios aplicables:</strong></p>
+          <ul>
+            <li>Laboratorio Clínico</li>
+            <li>Resonancia Magnética</li>
+            <li>Lentes</li>
+            <li>Tomografía</li>
+            <li>Ultrasonido</li>
+          </ul>`,
+        sucursales: '<p>Aplica en sucursales a nivel <strong>Nacional</strong>.</p>',
+        imagenFinal: 'https://grupostep.com.mx/wp-content/uploads/2026/10/FE-01.jpg'
+      },
+      'N ROUTE': {
+        logo: 'https://grupostep.com.mx/wp-content/uploads/2026/09/logo-FAWELITE-NROUTE-300x300.png',
+        promocion: `
+          <p><strong>15% de descuento.</strong></p>
+          <p><strong>Restricciones:</strong></p>
+          <ul>
+            <li>No aplica en alcohol.</li>
+            <li>No aplica en cigarros.</li>
+            <li>No aplica en conjunto con otras promociones.</li>
+          </ul>`,
+        sucursales: '<p>Aplica en sucursales de <strong>Hermosillo</strong>.</p>',
+        imagenFinal: null,
+        mensajeFinal: '<p style="color: #555; margin-top:15px;">Presenta tu identificación corporativa o menciona tu beneficio al solicitar tu cuenta.</p>'
+      }
+    };
+
+    // PASO INTERMEDIO: VER INFORMACIÓN DEL CONVENIO (PUNTO 3)
+    function verDetalle(opcion) {
+      opcionSeleccionada = opcion;
+      const data = convenios[opcion];
+
+      document.getElementById('detail-logo').src = data.logo;
+      document.getElementById('detail-title').innerText = opcion;
+
+      let htmlContent = `
+        <h3>Promoción</h3>
+        ${data.promocion}
+        <h3>Sucursales / Lugares donde aplica</h3>
+        ${data.sucursales}
+      `;
+
+      document.getElementById('detail-body').innerHTML = htmlContent;
+
+      // Ocultar vista 1 y mostrar vista 2
+      document.getElementById('vista-seleccion').style.display = 'none';
+      document.getElementById('vista-detalle').style.display = 'block';
+      window.scrollTo(0, 0);
+    }
+
+    function volverASeleccion() {
+      document.getElementById('vista-detalle').style.display = 'none';
+      document.getElementById('vista-seleccion').style.display = 'block';
+      window.scrollTo(0, 0);
+    }
+
+    // CONFIRMAR Y REGISTRAR SELECCIÓN EN GOOGLE SHEETS
+    function confirmarRegistro() {
+      document.getElementById('vista-detalle').style.display = 'none';
       document.getElementById('loader').style.display = 'block';
 
       fetch(API_URL, {
         method: 'POST',
         mode: 'no-cors',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ usuario: usuario, accion: 'Seleccion', opcion: opcion })
+        body: JSON.stringify({ usuario: usuario, accion: 'Seleccion', opcion: opcionSeleccionada })
       }).then(() => {
         document.getElementById('loader').style.display = 'none';
-        document.getElementById('confirmacion').style.display = 'block';
+        mostrarVistaFinal();
+      }).catch(() => {
+        document.getElementById('loader').style.display = 'none';
+        mostrarVistaFinal();
       });
+    }
+
+    // MOSTRAR VISTA FINAL CON LOGO PERSISTENTE E IMAGEN/MENSAJE (PUNTO 6 Y 7)
+    function mostrarVistaFinal() {
+      const data = convenios[opcionSeleccionada];
+
+      document.getElementById('final-logo').src = data.logo;
+      document.getElementById('final-title').innerText = opcionSeleccionada;
+
+      const container = document.getElementById('final-content');
+      container.innerHTML = '';
+
+      if (data.imagenFinal) {
+        const img = document.createElement('img');
+        img.src = data.imagenFinal;
+        img.alt = 'Promoción ' + opcionSeleccionada;
+        img.className = 'final-image';
+        container.appendChild(img);
+      } else if (data.mensajeFinal) {
+        container.innerHTML = data.mensajeFinal;
+      }
+
+      document.getElementById('vista-final').style.display = 'block';
+      window.scrollTo(0, 0);
     }
   </script>
 
