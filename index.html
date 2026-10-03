@@ -338,6 +338,9 @@
     // URL DE TU BACKEND EN GOOGLE APPS SCRIPT
     const API_URL = "https://script.google.com/macros/s/AKfycbyuA8FmPXTqsoaizhaAot6fS4J6x6fUijh2AbUqiGclEqEygu7fBssWijEOdAo4yReV/exec";
     
+    // PESTAÑA DESTINO EN GOOGLE SHEETS
+    const NOMBRE_PESTANA = "Registros OPERADORES Y CLIENTES";
+
     // OBTENER PARÁMETRO DE USUARIO DESDE LA URL
     const urlParams = new URLSearchParams(window.location.search);
     const usuario = urlParams.get('usuario') || 'Usuario';
@@ -346,7 +349,7 @@
 
     document.getElementById('saludo').innerText = 'Hola ' + usuario + ', ¿a dónde iremos hoy?';
 
-   // REGISTRO AUTOMÁTICO DE APERTURA AL CARGAR LA PÁGINA
+    // REGISTRO AUTOMÁTICO DE APERTURA AL CARGAR LA PÁGINA
     window.onload = function() {
       fetch(API_URL, {
         method: 'POST',
@@ -355,7 +358,7 @@
         body: JSON.stringify({ 
           usuario: usuario, 
           accion: 'Apertura de Link',
-          pestana: 'Registros OPERADORES Y CLIENTES' // Pestaña de destino
+          pestana: NOMBRE_PESTANA // Pestaña de destino
         })
       });
     };
@@ -373,7 +376,7 @@
           usuario: usuario, 
           accion: 'Seleccion', 
           opcion: opcionSeleccionada,
-          pestana: 'Registros OPERADORES Y CLIENTES' // Pestaña de destino
+          pestana: NOMBRE_PESTANA // Pestaña de destino
         })
       }).then(() => {
         document.getElementById('loader').style.display = 'none';
@@ -470,25 +473,6 @@
       document.getElementById('vista-detalle').style.display = 'none';
       document.getElementById('vista-seleccion').style.display = 'block';
       window.scrollTo(0, 0);
-    }
-
-    // CONFIRMAR Y REGISTRAR SELECCIÓN EN GOOGLE SHEETS
-    function confirmarRegistro() {
-      document.getElementById('vista-detalle').style.display = 'none';
-      document.getElementById('loader').style.display = 'block';
-
-      fetch(API_URL, {
-        method: 'POST',
-        mode: 'no-cors',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ usuario: usuario, accion: 'Seleccion', opcion: opcionSeleccionada })
-      }).then(() => {
-        document.getElementById('loader').style.display = 'none';
-        mostrarVistaFinal();
-      }).catch(() => {
-        document.getElementById('loader').style.display = 'none';
-        mostrarVistaFinal();
-      });
     }
 
     // MOSTRAR VISTA FINAL CON LOGO PERSISTENTE E IMAGEN/MENSAJE (PUNTO 6 Y 7)
